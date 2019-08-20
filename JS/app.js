@@ -17,31 +17,55 @@ return {
     playRound(playerSelection, computerSelection) {
         // your code here!
         playerSelection = playerSelection.toLowerCase();
-        // let playerSelection = prompt("What is your choice ?");
         if((playerSelection === this.rocks)  && (computerSelection === this.scissors)){
-            return 'You Win! Rock beats Scissors';
+            return 'You Win ! Rock beats Scissors';
         }else if((computerSelection === this.rocks)  && (playerSelection === this.scissors)){
             return 'You Lose! Rock beats Scissors';
         }else if((playerSelection === this.paper)  && (computerSelection === this.scissors)){
             return 'You Lose! Scissors beats Paper';
         }else if((computerSelection === this.paper)  && (playerSelection === this.scissors)){
-            return 'You Win! Scissors beats Paper';
+            return 'You Win ! Scissors beats Paper';
         }else if((playerSelection === this.rocks)  && (computerSelection === this.paper)){
             return 'You Lose! Paper beats Rock';
         }else if((computerSelection === this.rocks)  && (playerSelection === this.paper)){
-            return 'You Win! Paper beats Rock';
+            return 'You Win ! Paper beats Rock';
         }else {
             return 'equality';
+        }
+    },
+    game (){
+        const rounds = 5;
+        let playerScore = 0;
+        let computerScore = 0;
+        for (let index = 0; index < rounds; index++) {
+            let playerSelection = prompt("What is your choice ?");
+            let computerSelection = Controller.computerPlay();
+            let result = this.playRound(playerSelection, computerSelection);
+
+            console.log(result);
+
+            if(/win/gi.test(result)){
+                playerScore++;
+                console.log(playerScore);
+            }else if(/lose/gi.test(result)){
+                computerScore++;
+            }
+        }
+
+        switch (true) {
+            case playerScore > computerScore:
+                console.log(`Congratulations, You have won by ${playerScore}`)
+                break;
+            case playerScore < computerScore:
+                console.log(`Sorry, \ncomputer: ${computerScore} \nPlayer: ${playerScore} \nYou've lost. `)
+                break;
+            default:
+                console.log(`Perfect Equality ${playerScore}`)
+                break;
         }
     }
 }
 })();
 
-const UI = (function(){
-    let playerSelection = 'RoCK';
-    let computerSelection = Controller.computerPlay();
-    return Controller.playRound(playerSelection, computerSelection);
-})();
 
-
-console.log(UI);
+Controller.game();
